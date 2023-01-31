@@ -188,7 +188,7 @@ class AnalyseData:
                 self.analysed_data[habit_name]["analysed_data"]["full_target_duration"] = full_target_duration
 
                 duration = datetime.combine(date.min, target_duration) - datetime.min
-                print(str(duration))
+                #print(str(duration))
                 if target_repeats <= actions_done and duration <= full_done_duration:
                     #print("target repeats= "+str(target_repeats))
                     #print("actions_done= "+str(actions_done))
