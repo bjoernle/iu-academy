@@ -10,13 +10,6 @@ You could run it directly by python, or you could use something like XAMPP PHP s
 https://www.python.org/downloads/
 
 
-## Installation of requirements
-
-    ---shell
-    pip install requirements.txt
-    ---
-
-
 ## Installation of pip installer
     Linux
     ---shell
@@ -28,6 +21,11 @@ https://www.python.org/downloads/
     curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
     ---
 
+## Installation of requirements
+
+    ---shell
+    pip install requirements.txt
+    ---
 
 ## Installation of xampp (unnecessary)
 
@@ -35,11 +33,17 @@ https://www.apachefriends.org/
 
 
 ## Usage by php server:
+
 Windows:
+
 copy the HabitTracker folder to your XAMPP "htdocs" folder (C:\xampp\htdocs\).
+
 Linux:
+
 copy the HabitTracker folder to your LAMPP "html" folder (/var/www/html).
 In the XAMPP folder, click on xampp_start.exe
+
+--
 
 open http://localhost/HabitTracker by your webbrowser with enabled javascript
 
