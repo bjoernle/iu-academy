@@ -12,7 +12,8 @@ if(str_contains(PHP_OS, "Linux")){
 
 session_start();
 $_SESSION["SameSite"] = "None";
-$_SESSION["username"] = "blubb";
+$_SESSION["username"] = "admin";
+$_SESSION["id"] = "1";
 echo $_SESSION["username"];
 //echo("Session: ".session_status());
 if (!empty($_SERVER['HTTP_ORIGIN'])) {
