@@ -54,13 +54,6 @@ class TestHabitTracker:
         print()
         self.test_user_actions(path, self.settings_json)
 
-        print()
-        automatic = self.automatic_tests
-        if not automatic:
-            print("Please press enter for analysing the data.")
-            input()
-        else:
-            print("Analysing data.")
         #print(self.settings_json["user"][0]["user_id"])
         print()
         print("-------------------------------------")
