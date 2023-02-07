@@ -164,7 +164,21 @@ every value with spaces you have to limit with the " char
         ---shell
         python HabitTracker.py action=AnalyseData user_id=USER_ID
         ---		
+
+    GiveAllSamePeriod (string user_id)
+        Example: 
     
+        ---shell
+        python HabitTracker.py action=GiveAllSamePeriod user_id=USER_ID
+        ---	
+    
+    GiveLongestSerie (string user_id, string habit_name)
+        Example: 
+    
+        ---shell
+        python HabitTracker.py action=GiveLongestSerie user_id=USER_ID habit_name=HABIT_NAME
+        ---	
+
     TestEverything (string user_id)
         Example: 
     
