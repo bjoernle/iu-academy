@@ -36,10 +36,11 @@ class TestHabitTracker:
     def test_everything(self, path):
         """ test all things you that you can test
         :param path: path to database file
-        :return: no return, just some text
+        :return: no return, just some text output
         """
         if self.automatic_tests == "true" or self.automatic_tests == "True":
             print("--- AUTOMATIC TESTS ---")
+
         print("-------------------------------------")
         print("Test Database")
         print("-------------------------------------")
@@ -48,10 +49,12 @@ class TestHabitTracker:
 
         print("-------------------------------------")
         print("Test user related actions")
+        print("(Signup, Login, Delete)")
         print("-------------------------------------")
         print()
         self.test_user_actions(path, self.settings_json)
 
+        print()
         automatic = self.automatic_tests
         if not automatic:
             print("Please press enter for analysing the data.")
@@ -65,7 +68,30 @@ class TestHabitTracker:
         print("-------------------------------------")
         print()
         analyse_class = analyse.AnalyseData(path, self.settings_json)
+        print()
+        print("-------------------------------------")
+        print("Give full analyse")
+        print("-------------------------------------")
+        print()
         analyse_class.give_full_analyse()
+        print()
+        print("-------------------------------------")
+        print("Give all of same period")
+        print("-------------------------------------")
+        print()
+        analyse_class.give_all_same_period()
+        print()
+        print("-------------------------------------")
+        print("Give longest series")
+        print("-------------------------------------")
+        print()        
+        analyse_class.give_longest_serie()
+        print()
+        print("-------------------------------------")
+        print("Give serie 'tooth brushing' (habit_name=tooth³brushing)")
+        print("-------------------------------------")
+        print()
+        analyse_class.give_longest_serie("tooth brushing")
         #analyse_class.give_summary()
         if self.settings_json["runtime_settings"][0]["automatic_tests"] == "True":
             files.delete_file(path)
@@ -106,6 +132,7 @@ class TestHabitTracker:
         if len(user) > 0:
             print("User logged in.")
             print(user)
+
         else:
             print("Found no user.")
         print("user id for deleting: "+str(user[0][0]))
@@ -150,7 +177,7 @@ class TestHabitTracker:
         print("before:")
         sqlite.get_sqlite_vals_by_columns_and_values(path, "habits", "id", str(inserted_habits[0]))
         sqlite.edit_row_by_columns_and_values(path, "habits", "name, description",
-                                              "tooth brushing at morning, brush your teethes!", "id",
+                                              "tooth brushing, brush your teethes!", "id",
                                               str(inserted_habits[0]), show_db_action)
         print()
         if not automatic:
@@ -193,7 +220,7 @@ class TestHabitTracker:
         cols = """user_id, name, description, timespan, date_start, date_end, target_time_start, 
         target_time_end, target_duration, target_repeats, completed, created"""
         vals_array = []
-        vals_array.append(str(user_id) + ", tooth brushing, brush your toothes 3 minutes, daily, 2023-01-01, 2023-12-31, 06:00, 07:00, 00:03, 1, 0, 2023-01-01")
+        vals_array.append(str(user_id) + ", toot brushin, brush your toothes 3 minutes, daily, 2023-01-01, 2023-12-31, 06:00, 07:00, 00:03, 1, 0, 2023-01-01")
         vals_array.append(str(user_id) + ", read informatic articles, heise and so on, daily, 2023-01-01, 2023-12-31, 06:00, 07:00, 00:10, 1, 0, 2023-01-01")
         vals_array.append(str(user_id) + ", go jogging, something for your health!, weekly, 2023-01-01, 2023-12-31, 18:00, 19:00, 00:30, 2, 0, 2023-01-01")
         vals_array.append(str(user_id) + ", call your grandmother, for your family.., weekly, 2023-01-01, 2023-12-31, 17:00, 18:00, 00:15, 2, 0, 2023-01-01")

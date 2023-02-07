@@ -171,6 +171,27 @@ def get_all_from_table(path, table, show_action=False):
     return rows
 
 
+def get_from_table_by_id(path, table, id, show_action=False):
+    """ get row from table by id
+    :param show_action: True if you want to see the quered actions
+    :param table: table from database
+    :param path: path to database file
+    :param id: id of row
+    :return: Connection object or None
+    """
+    sqlite_connection = create_connection(path)
+    cursor = sqlite_connection.cursor()
+    #print(str(id))
+    sql = "SELECT * FROM " + table + " WHERE id = '"+str(id)+"'"
+    if show_action:
+        print(sql)
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    #for row in rows:
+    #    print(row)
+    return rows
+
+
 def get_sqlite_vals_by_columns_and_values(path, table, column_name_csv, values_csv, show_action=False):
     """ get sqlite vals by column csv and values csv
     :param values_csv: a csv of values

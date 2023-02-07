@@ -1,4 +1,7 @@
 import json
+from datetime import datetime, date
+from dateutil import relativedelta
+
 class AnalyseData:
     analysed_data = {}
     path = ""
@@ -6,8 +9,148 @@ class AnalyseData:
     def __init__(self, path, settings_json):
         self.path = path
         self.settings_json = settings_json
-        self.analyse_user_records_by_id()
+        self.full_analyse_user_records_by_id()
 
+    def give_all_same_period(self, period=""):
+        all_data = self.analysed_data
+        yearly_list = []
+        monthly_list = []
+        weekly_list = []
+        daily_list = []
+        for habit in all_data:
+            habit_attributes = self.analysed_data[habit]
+            if habit_attributes["given_attrs"]["timespan"]=="yearly":
+                yearly_list.append(habit)
+            elif habit_attributes["given_attrs"]["timespan"]=="monthly":   
+                monthly_list.append(habit)
+            elif habit_attributes["given_attrs"]["timespan"]=="weekly":   
+                weekly_list.append(habit)
+            elif habit_attributes["given_attrs"]["timespan"]=="daily":   
+                daily_list.append(habit)
+        print("Same period:")
+        print("Yearly: ("+str(len(yearly_list))+")")
+        for list_item in yearly_list:
+            print(list_item)
+        print("Monthly: ("+str(len(monthly_list))+")")
+        for list_item in monthly_list:
+            print(list_item)
+        print("Weekly: ("+str(len(weekly_list))+")")
+        for list_item in weekly_list:
+            print(list_item)
+        print("Daily: ("+str(len(daily_list))+")")
+        for list_item in daily_list:
+            print(list_item)
+
+    #def give_longest_series(self):
+        
+    #    print()
+
+    def give_longest_serie(self, habit_name=""):
+        all_data = self.analysed_data
+        #if habit_name != "":
+        for habit in all_data:
+            if habit_name != "":
+                habit=habit_name
+                print(habit)
+            #print(self.analysed_data)
+            timespan = self.analysed_data[habit]["given_attrs"]["timespan"]
+            #self.analysed_data[habit]["analysed_data"]["dones"]
+
+            print("Habit: "+habit)
+            lst = []
+            for last_done in dict(self.analysed_data[habit]["analysed_data"]["dones"]).items():
+                lst.append(str(last_done[1]["from_time"]))
+
+            new_lst = sorted(datetime.strptime(x, '%Y-%m-%d %H:%M:%S') for x in lst)
+            last_date=""
+            counter=0
+            series={}
+            #series[counter]=[]
+            for action_date in new_lst:
+                if last_date =="":
+                    last_date=action_date
+                if not series:
+                    series[counter]=[]
+                    series[counter].append(action_date)
+                #print(str(last_date)+" "+str(action_date))
+
+                if timespan == "yearly":
+                    #print(str((action_date.year - last_date.year)))
+                    if last_date != "":
+                        if action_date.year - last_date.year == 0:
+                            pass
+                        elif action_date.year - last_date.year == 1:
+                            series[counter].append(action_date)
+                        else:
+                            #last_date=action_date
+                            #print(str(relativedelta.relativedelta(action_date, last_date).years))
+                            counter=counter+1
+                            series[counter]=[]
+                            series[counter].append(action_date)
+                    else:
+                        series[counter].append(action_date)
+                elif timespan == "monthly":
+                    if last_date !="" and relativedelta.relativedelta(action_date, last_date).months == 1:
+                        series[counter].append(action_date)
+                    else:
+                        counter=counter+1
+                        series[counter]=[]
+                        series[counter].append(action_date)
+                elif timespan == "weekly":
+                    if last_date !="" and relativedelta.relativedelta(action_date, last_date).weeks == 1:
+                        series[counter].append(action_date)
+                    else:
+                        counter=counter+1
+                        series[counter]=[]
+                        series[counter].append(action_date)
+                elif timespan == "daily":
+                    if last_date != "":
+                        if last_date !="" and relativedelta.relativedelta(action_date, last_date).days == 0:
+                            pass
+                        elif last_date !="" and relativedelta.relativedelta(action_date, last_date).days == 1:
+                            #print(str(relativedelta.relativedelta(action_date, last_date).days))
+                            series[counter].append(action_date)
+                        else:
+                            counter=counter+1
+                            series[counter]=[]
+                            series[counter].append(action_date)
+                #print(dates[0])
+                last_date=action_date
+            max_series=0
+            max_series_from=""
+            max_series_to=""
+            min_series=0
+            min_series_from=""
+            min_series_to=""
+            if len(series.items())>0:
+                print("Count of series: "+str(len(series.items())))
+                cnt=0
+                for series_dates in series.items():
+                    cnt=cnt+1
+                    print(str(cnt)+". serie: "+str(len(list(series_dates[1]))))
+                    if max_series < (len(list(series_dates[1]))):
+                        max_entry=cnt-1
+                        max_series = (len(list(series_dates[1])))
+                        max_series_from = list(series_dates[1])[0]
+                        max_series_to = list(series_dates[1])[len(list(series_dates[1]))-1]
+                    if max_series > (len(list(series_dates[1]))):
+                        min_entry=cnt-1
+                        min_series = (len(list(series_dates[1])))
+                        min_series_from = list(series_dates[1])[0]
+                        min_series_to = list(series_dates[1])[len(list(series_dates[1]))-1]
+                if(min_series>0):
+                    print("Min repeats: "+str(min_series)+" times, on "+str(min_entry)+". attempt ("+str(min_series_from)+" to "+str(min_series_to)+")")
+                print("Max repeats: "+str(max_series)+" times, on "+str(max_entry)+". attempt ("+str(max_series_from)+" to "+str(max_series_to)+")")
+                print()
+            else:
+                print("currently no repeats")    
+            
+            if habit_name != "":
+                break
+            #print(str(start_date)+" to "+str(end_date))
+
+        #print(lst)
+    
     def give_summary(self):
         all_data = self.analysed_data
 
@@ -61,7 +204,7 @@ class AnalyseData:
             print()
 
 
-    def analyse_user_records_by_id(self, return_json="True"):
+    def full_analyse_user_records_by_id(self, return_json="True"):
         """
         Calculate the event of the counter
 
@@ -103,6 +246,8 @@ class AnalyseData:
                 self.analysed_data[habit_name]["analysed_data"]["dones"] = {}
                 # print(self.analysed_data)
 
+                timespan = habit[4]
+                self.analysed_data[habit_name]["given_attrs"]["timespan"] = timespan
                 start_date = datetime.strptime(habit[5], '%Y-%m-%d')
                 self.analysed_data[habit_name]["given_attrs"]["start_date"] = start_date
                 end_date = datetime.strptime(habit[6], '%Y-%m-%d')
@@ -145,17 +290,16 @@ class AnalyseData:
                 self.analysed_data[habit_name]["analysed_data"]["actions_left"] = actions_left
 
                 counter = 0
-                self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = []
+                #self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = []
+                #self.analysed_data[habit_name]["given_attrs"]["dones"]["dates"] = []
                 for done_habit in habit_dones:
                     full_done_duration = timedelta(microseconds=0)
                     done_habit_dict = {}
 
                     self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = []
                     self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = done_habit
-                    # done_habit_dict["done_habit"] = done_habit
 
                     from_time = datetime.strptime(done_habit[2], '%Y-%m-%d %H:%M')
-                    #print(from_time)
                     done_habit_dict["from_time"] = from_time
                     to_time = datetime.strptime(done_habit[3], '%Y-%m-%d %H:%M')
                     done_habit_dict["to_time"] = to_time
@@ -163,7 +307,6 @@ class AnalyseData:
                     done_habit_dict["created"] = created
 
                     timespan_done_habit = to_time - from_time
-                    #print(self.analysed_data)
                     done_habit_dict["timespan_done_habit"] = timespan_done_habit
                     difference_start = from_time - datetime.combine(from_time.date(), target_time_start)
                     done_habit_dict["difference_start"] = difference_start
@@ -176,11 +319,8 @@ class AnalyseData:
 
                     self.analysed_data[habit_name]["analysed_data"]["dones"][counter] = done_habit_dict
 
-                    #print("done habit: "+str(timespan_done_habit))
-                    #print("full done: "+str(full_done_duration))
                     full_done_duration += timespan_done_habit
 
-                    #print(str(counter)+" "+str(full_done_duration)+" + "+str(timespan_done_habit))
                     counter = counter + 1
 
                     # [habit_name].append(done_habit)
@@ -188,18 +328,20 @@ class AnalyseData:
                 self.analysed_data[habit_name]["analysed_data"]["full_target_duration"] = full_target_duration
 
                 duration = datetime.combine(date.min, target_duration) - datetime.min
-                #print(str(duration))
-                if target_repeats <= actions_done and duration <= full_done_duration:
-                    #print("target repeats= "+str(target_repeats))
-                    #print("actions_done= "+str(actions_done))
-                    #print("duration= "+str(duration))
-                    #print("full duration done= "+str(full_done_duration))
-                    #print("Habit '"+habit_name+"' completed")
 
-                    sqlite.edit_row_by_id(self.path, "habits", "completed", "1", habit_id)
-                    self.analysed_data[habit_name]["analysed_data"]["completed"] = 1
+                if target_repeats <= actions_done and duration <= full_done_duration:
+                    #print("target_rep: "+str(target_repeats)+" <= done: "+str(actions_done))
+                    #print("dur: "+str(duration)+" <= full_dur: "+str(full_done_duration))
+                    if sqlite.get_from_table_by_id(self.path, "habits", habit_id)[0][11] == 1:
+                        print("Habit "+habit_name+" already done")
+                    else:    
+                        sqlite.edit_row_by_id(self.path, "habits", "completed", "1", habit_id)
+                        self.analysed_data[habit_name]["analysed_data"]["completed"] = 1
+                        print("Habit "+habit_name+" updated, it's done!")
+                    #print("Habit '"+habit_name+"' completed")
                 else:
                     self.analysed_data[habit_name]["analysed_data"]["completed"] = 0
+            print()
 
         #if return_json:
         #    return json.dumps(rows)

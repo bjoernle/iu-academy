@@ -65,6 +65,12 @@ def eli():
     elif settings_json["action"] == "AnalyseData":
         analyse_class = analyse.AnalyseData(path, settings_json)
         analyse_class.give_full_analyse()
+    elif settings_json["action"] == "GiveAllSamePeriod":
+        analyse_class = analyse.AnalyseData(path, settings_json)
+        analyse_class.give_all_same_period()
+    elif settings_json["action"] == "GiveLongestSerie":
+        analyse_class = analyse.AnalyseData(path, settings_json)
+        analyse_class.give_longest_serie(settings_json["habit"][0]["name"])     
     elif settings_json["action"] == "AnalyseDataSummary":
         analyse_class = analyse.AnalyseData(path, settings_json)
         analyse_class.give_summary()
