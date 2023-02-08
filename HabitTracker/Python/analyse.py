@@ -1,3 +1,5 @@
+import system
+
 import json
 from datetime import datetime, date
 from dateutil import relativedelta
@@ -299,11 +301,13 @@ class AnalyseData:
                     self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = []
                     self.analysed_data[habit_name]["given_attrs"]["dones"][counter] = done_habit
 
-                    from_time = datetime.strptime(done_habit[2], '%Y-%m-%d %H:%M')
+                    #from_time = datetime.strptime(done_habit[2], '%Y-%m-%d %H:%M')
+                    from_time = system.string_to_datetime(done_habit[2])
+
                     done_habit_dict["from_time"] = from_time
-                    to_time = datetime.strptime(done_habit[3], '%Y-%m-%d %H:%M')
+                    to_time = system.string_to_datetime(done_habit[3])
                     done_habit_dict["to_time"] = to_time
-                    created = datetime.strptime(done_habit[3], '%Y-%m-%d %H:%M')
+                    created = to_time
                     done_habit_dict["created"] = created
 
                     timespan_done_habit = to_time - from_time

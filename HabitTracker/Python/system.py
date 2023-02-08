@@ -1,3 +1,5 @@
+import datetime
+
 def get_folder_separator():
     import os
     folder_separator = ""
@@ -82,3 +84,19 @@ def createWebServer():
     # Star the server
     my_server.serve_forever()
 
+def string_to_datetime(datestring):
+    d=""
+    try:
+        d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M:%S")
+        
+    except ValueError:
+        try:
+            d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M")
+        except ValueError:
+            try:
+                d = datetime.datetime.strptime(datestring, "%Y-%m-%d")
+            except:
+                d="date not transformable"
+    finally:
+        return d
+            

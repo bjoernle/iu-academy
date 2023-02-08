@@ -233,13 +233,16 @@ class TestHabitTracker:
         """
         cols = "habit_id, start_datetime, end_datetime, created, modified"
         datetime_now = datetime.datetime.now()
-        for habit_id in inserted_habits:
-            # print("Habit-ID: "+str(habit_id))
 
-            vals = str(habit_id) + ", 2023-01-01 06:06, 2023-01-01 06:09, "+str(datetime_now)+", "+str(datetime_now)
+        #dt=datetime.datetime.strptime("2023-01-01 06:06", '%Y-%m-%d %H:%M')
+        dt=datetime.datetime(2023, 1, 1, 6, 15)
+        for habit_id in inserted_habits:
+            dt_new= dt + datetime.timedelta(days=1)
+            # print("Habit-ID: "+str(habit_id))
+            vals = str(habit_id) + ", "+str(dt)+", "+str(dt_new)+", "+str(datetime_now)+", "+str(datetime_now)
             lasttime_id = sqlite.insert_to_sqlite_table(path, "habits_lasttime", cols, vals, self.show_db_actions)
             print("ID in database: " + str(lasttime_id))
-        vals = str(inserted_habits[-1]) + ", 1970-01-02 06:15, 1970-01-02 07:00, "+str(datetime_now)+", "+str(datetime_now)
+        vals = str(inserted_habits[-1]) + ", 2023-01-02 06:15, 2023-01-02 07:00, "+str(datetime_now)+", "+str(datetime_now)
         lasttime_id = sqlite.insert_to_sqlite_table(path, "habits_lasttime", cols, vals, self.show_db_actions)
         print("ID in database: " + str(lasttime_id))
 
