@@ -33,10 +33,12 @@ def eli():
         settings_json = settingsChanger.set_new_settings(settings_json, given_attributes)
     sqlite.create_tables_habittracker(path)
 
+    #just for entertainment while waiting
     waiting_time = int(settings_json["runtime_settings"][0]["wait"])
     if waiting_time > 0:
         time.sleep(waiting_time)
 
+    #choose action
     if settings_json["action"] == "LoginUser":
         rows = actions.get_user(path, settings_json)
         if len(rows) > 0:
@@ -94,32 +96,17 @@ def eli():
         test.test_everything(test_path)
 
     elif settings_json["action"] == "StartServer":
-        #wb = webserver.webserver()
-        #wb.run_server_and_open_browser()
-        #os.system("python webserver.py")
-
         import webbrowser
         ip = str(system.get_own_ip_address())
         url = "http://"+ip+":5000"
         webbrowser.open(url, new=0, autoraise=True)
-        #webbrowser.open(url, new=0)
-        #import webserver
         if platform.system() == "Windows":
             os.system("start /wait cmd /c python webserver.py")
-            #subprocess.call('start /wait python webserver.py', shell=True)
         if platform.system() == "Linux":
             os.system("gnome-terminal -e 'bash -c python webserver.py'")
-            #subprocess.Popen(["python", "webserver.py"])
-        #(output, err) = p.communicate()
-        
-        ## Wait for date to terminate. Get return returncode ##
-        #p_status = p.wait()
-        #test.test_everything(test_path)
     else:
         print("No action was given.")
 
 
 if __name__ == '__main__':
     eli()
-
-    # test_project.TestHabitTracker.show_all_of_user(test_path, "1")
