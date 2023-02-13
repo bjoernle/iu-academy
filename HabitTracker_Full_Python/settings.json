@@ -1,0 +1,43 @@
+{
+	"action": "",
+	"habit_id": "",
+	"user": [
+		{
+			"user_name": "",
+			"user_password": "",
+			"user_id": ""
+		}
+	],
+	"habit": [
+		{
+			"name": "",
+			"description": "",
+			"timespan": "",
+			"date_start": "",
+			"date_end": "",
+			"target_time_start": "",
+			"target_time_end": "",
+			"target_duration": "",
+			"target_repeats": "",
+			"created": ""
+		}
+	],
+	"habit_lasttime": [
+		{
+			"habit_id": "",
+			"start_datetime": "",
+			"end_datetime": "",
+			"created": ""
+		}
+	],
+	"runtime_settings": [
+		{
+			"wait": "0",
+			"show_messages": "False",
+			"show_db_actions": "False",
+			"automatic_tests": "True",
+			"return_json": "True",
+			"run_python_server": "False"
+		}
+	]
+}

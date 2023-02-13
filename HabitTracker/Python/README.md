@@ -172,7 +172,7 @@ every value with spaces you have to limit with the " char
         python HabitTracker.py action=GiveAllSamePeriod user_id=USER_ID
         ---	
     
-    GiveLongestSerie (string user_id, string habit_name)
+    GiveLongestSerie (string user_id, string habit_name="")
         Example: 
     
         ---shell
