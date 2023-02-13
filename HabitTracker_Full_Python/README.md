@@ -71,12 +71,10 @@ first open commandline and change the directory to the python folder
 The foldername you copied the project-folder into: 
 	foldername="--FolderName--"
 	
-For XAMPP:
-	Example:
-	Windows:("cd C://xampp/htdocs/--FolderName--/Python)
-For LAMPP:
-	Example:
-	Linux:("cd \var\www\html\--FolderName--\Python)
+Windows
+	Example:("cd --FolderName--/Python)
+Linux
+	Example:("cd --FolderName--\Python)
 
 Now you're able to do something like this:
         Example: 
@@ -99,8 +97,6 @@ Now you're able to do something like this:
 
 
 ### Actions
-
-every value with spaces you have to limit with the " char
 	
     LoginUser (string username, string password)
         Example: 
@@ -120,7 +116,7 @@ every value with spaces you have to limit with the " char
         Example: 
     
         ---shell
-        python HabitTracker.py action=AddHabit user_id=USER_ID habit_name="HABIT_NAME" timespan="dayly"<-OR->timespan="weekly"<-OR->timespan="monthly"<-OR->timespan="yearly"
+        python HabitTracker.py action=AddHabit user_id=USER_ID habit_name=HABIT³NAME timespan="dayly"<-OR->timespan="weekly"<-OR->timespan="monthly"<-OR->timespan="yearly"
         date_start="2023-01-01" date_end="2023-12-31" target_time_start="07:00" target_time_end="08:00" target_duration="00:30" target_repeats="1"
         ---
     

@@ -10,7 +10,6 @@ def set_new_settings(settings, parameters):
     count_of_values = 0
     count_of_onekey_parameter = 0
     onekey_parameters_string = ""
-    # print("------------")
     messages = []
     for parameter in parameters:
 
@@ -19,11 +18,10 @@ def set_new_settings(settings, parameters):
             key_val = parameter.split("=")
 
             if len(key_val) > 1:
-                #print(key_val[0]+"="+key_val[1])
+
                 if key_val[1] != "":
                     count_of_values = count_of_values+1
 
-                    # get
                     if key_val[0] == "action":
                         messages.append("using-action:" + key_val[1])
                         settings["action"] = key_val[1]
@@ -35,7 +33,6 @@ def set_new_settings(settings, parameters):
                         messages.append("user:" + key_val[1])
                         settings["user"][0]["user_name"] = key_val[1]
                     elif key_val[0] == "user_password":
-                        # print("Password:" + key_val[1])
                         settings["user"][0]["user_password"] = key_val[1]
                     elif key_val[0] == "user_id":
                         messages.append("User ID:" + key_val[1])

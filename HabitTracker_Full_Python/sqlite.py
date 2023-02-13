@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def create_connection(path):
     """ create a database connection to the SQLite database
         specified by the db_file

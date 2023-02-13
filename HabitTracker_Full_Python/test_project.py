@@ -22,7 +22,6 @@ class TestHabitTracker:
         :return: no return, just some text
         """
         self.settings_json = settings
-        # print(settings["action"])
         if settings["runtime_settings"][0]["show_db_actions"] == "True":
             self.show_db_actions = True
         else:
@@ -54,7 +53,6 @@ class TestHabitTracker:
         print()
         self.test_user_actions(path, self.settings_json)
 
-        #print(self.settings_json["user"][0]["user_id"])
         print()
         print("-------------------------------------")
         print("Analyse all produced data of test-user")
@@ -85,7 +83,6 @@ class TestHabitTracker:
         print("-------------------------------------")
         print()
         analyse_class.give_longest_serie("tooth brushing")
-        #analyse_class.give_summary()
         if self.settings_json["runtime_settings"][0]["automatic_tests"] == "True":
             files.delete_file(path)
             print("Test-database deleted.")
@@ -121,7 +118,6 @@ class TestHabitTracker:
         else:
             print("Add user for login.")
         user = actions.get_user(path, settings_json)
-        #print(user[0])
         if len(user) > 0:
             print("User logged in.")
             print(user)
@@ -166,7 +162,6 @@ class TestHabitTracker:
             input()
         else:
             print("Edit the first habit (name, description)")
-        # print(show_db_action)
         print("before:")
         sqlite.get_sqlite_vals_by_columns_and_values(path, "habits", "id", str(inserted_habits[0]))
         sqlite.edit_row_by_columns_and_values(path, "habits", "name, description",
@@ -180,13 +175,6 @@ class TestHabitTracker:
             print("Inserting 6 done habits.")
         self.insert_test_done_habits(path)
         print()
-        if not automatic:
-            print("Please press y (yes) and then enter if you want to delete the last inserted row.")
-            if input() == "y":
-                sqlite.delete_last_row(path, "habits_lasttime", show_db_action)
-                print()
-        else:
-            print("Don't deleted the database.")
         if not automatic:
             print("Please press enter for show inserted Data.")
             input()
@@ -234,11 +222,9 @@ class TestHabitTracker:
         cols = "habit_id, start_datetime, end_datetime, created, modified"
         datetime_now = datetime.datetime.now()
 
-        #dt=datetime.datetime.strptime("2023-01-01 06:06", '%Y-%m-%d %H:%M')
         dt=datetime.datetime(2023, 1, 1, 6, 15)
         for habit_id in inserted_habits:
             dt_new= dt + datetime.timedelta(days=1)
-            # print("Habit-ID: "+str(habit_id))
             vals = str(habit_id) + ", "+str(dt)+", "+str(dt_new)+", "+str(datetime_now)+", "+str(datetime_now)
             lasttime_id = sqlite.insert_to_sqlite_table(path, "habits_lasttime", cols, vals, self.show_db_actions)
             print("ID in database: " + str(lasttime_id))
