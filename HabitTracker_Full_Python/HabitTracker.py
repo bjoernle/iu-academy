@@ -96,14 +96,16 @@ def eli():
         test.test_everything(test_path)
 
     elif settings_json["action"] == "StartServer":
-        import webbrowser
-        ip = str(system.get_own_ip_address())
-        url = "http://"+ip+":5000"
-        webbrowser.open(url, new=0, autoraise=True)
         if platform.system() == "Windows":
             os.system("start /wait cmd /c python webserver.py")
         if platform.system() == "Linux":
             os.system("gnome-terminal -e 'bash -c python webserver.py'")
+        #import thread
+        #thread.start_new_thread(os.system, ('a.exe',))
+        import webbrowser
+        ip = str(system.get_own_ip_address())
+        url = "http://"+ip+":5000"
+        webbrowser.open(url, new=0, autoraise=True)
     else:
         print("No action was given.")
 
