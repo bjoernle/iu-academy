@@ -1,3 +1,6 @@
+import system
+import datetime
+
 def set_new_settings(settings, parameters):
     """ get the given attributes and changes the settings_json
 
@@ -26,17 +29,25 @@ def set_new_settings(settings, parameters):
                         messages.append("using-action:" + key_val[1])
                         settings["action"] = key_val[1]
 
-                    elif key_val[0] == "habit_id":
-                        messages.append("Using habit-id:" + key_val[1])
-                        settings["habit_id"] = key_val[1]
+                    #elif key_val[0] == "habit_id":
+                    #    if key_val[1].isdigit():
+                    #        messages.append("Using habit-id:" + key_val[1])
+                    #        settings["habit_id"] = key_val[1]
+                    #    else:
+                    #        print("Habit-id is not a number.")
+                            
                     elif key_val[0] == "user_name":
                         messages.append("user:" + key_val[1])
                         settings["user"][0]["user_name"] = key_val[1]
                     elif key_val[0] == "user_password":
                         settings["user"][0]["user_password"] = key_val[1]
                     elif key_val[0] == "user_id":
-                        messages.append("User ID:" + key_val[1])
-                        settings["user"][0]["user_id"] = key_val[1]
+                        if key_val[1].isdigit():
+                            messages.append("User ID:" + key_val[1])
+                            settings["user"][0]["user_id"] = key_val[1]
+                        else:
+                            print("User-id is not a number.")
+                            
 
                     elif key_val[0] == "habit_name":
                         key_val[1] = key_val[1].replace("³", " ")
@@ -50,51 +61,104 @@ def set_new_settings(settings, parameters):
                         messages.append("Habit timespan:" + key_val[1])
                         settings["habit"][0]["timespan"] = key_val[1]
 
+
                     elif key_val[0] == "habit_date_start":
-                        messages.append("Habit date start:" + key_val[1])
-                        settings["habit"][0]["date_start"] = key_val[1]
+                        if isinstance(system.string_to_datetime(key_val[1]), datetime.date):
+                            messages.append("Habit date start:" + key_val[1])
+                            settings["habit"][0]["date_start"] = key_val[1]
+                        else:
+                            print("Habit_date_start is not a date.")
+                            
                     elif key_val[0] == "habit_date_end":
-                        messages.append("Habit date end:" + key_val[1])
-                        settings["habit"][0]["date_end"] = key_val[1]
+                        if isinstance(system.string_to_datetime(key_val[1]), datetime.date):
+                            messages.append("Habit date end:" + key_val[1])
+                            settings["habit"][0]["date_end"] = key_val[1]
+                        else:
+                            print("Habit_date_end is not a date.")
+                            
 
                     elif key_val[0] == "habit_target_time_start":
-                        messages.append("Habit target time start:" + key_val[1])
-                        settings["habit"][0]["target_time_start"] = key_val[1]
+                        if system.validate_timestring(key_val[1]):
+                            messages.append("Habit target time start:" + key_val[1])
+                            settings["habit"][0]["target_time_start"] = key_val[1]
+                        else:
+                            print("target_time_start is not a time.")
+                            
                     elif key_val[0] == "habit_target_time_end":
-                        messages.append("Habit target time end:" + key_val[1])
-                        settings["habit"][0]["target_time_end"] = key_val[1]
+                        if system.validate_timestring(key_val[1]):
+                            messages.append("Habit target time end:" + key_val[1])
+                            settings["habit"][0]["target_time_end"] = key_val[1]
+                        else:
+                            print("target_time_start is not a time.")
+                            
                     elif key_val[0] == "habit_target_duration":
-                        messages.append("Habit target duration:" + key_val[1])
-                        settings["habit"][0]["target_duration"] = key_val[1]
+                        if system.validate_timestring(key_val[1]):
+                            messages.append("Habit target duration:" + key_val[1])
+                            settings["habit"][0]["target_duration"] = key_val[1]
+                        else:
+                            print("target_duration is not a time.")
+                            
                     elif key_val[0] == "habit_target_repeats":
-                        messages.append("Habit target repeats:" + key_val[1])
-                        settings["habit"][0]["target_repeats"] = key_val[1]
-
+                        if key_val[1].isdigit():
+                            messages.append("Habit target repeats:" + key_val[1])
+                            settings["habit"][0]["target_repeats"] = key_val[1]
+                        else:
+                            print("target_repeats is not a number.")
+                            
                     elif key_val[0] == "habit_id":
-                        messages.append("Habit ID:" + key_val[1])
-                        settings["habit_lasttime"][0]["habit_id"] = key_val[1]
+                        if key_val[1].isdigit():
+                            messages.append("Habit ID:" + key_val[1])
+                            settings["habit_lasttime"][0]["habit_id"] = key_val[1]
+                        else:
+                            print("habit_id is not a number.")                
+
                     elif key_val[0] == "start_datetime":
-                        messages.append("Habit start datetime:" + key_val[1])
-                        settings["habit_lasttime"][0]["start_datetime"] = key_val[1]
+                        if system.validate_datetimestring(key_val[1]):
+                            messages.append("Habit start datetime:" + key_val[1])
+                            settings["habit_lasttime"][0]["start_datetime"] = key_val[1]
+                        else:
+                            print("start_datetime is not a datetime.")                              
+
                     elif key_val[0] == "end_datetime":
-                        print("Habit start datetime:" + key_val[1])
-                        settings["habit_lasttime"][0]["end_datetime"] = key_val[1]
+                        if system.validate_datetimestring(key_val[1]):
+                            messages.append("Habit start datetime:" + key_val[1])
+                            settings["habit_lasttime"][0]["end_datetime"] = key_val[1]
+                        else:
+                            print("habit_lasttime is not a datetime.")
+                             
                     elif key_val[0] == "created":
-                        messages.append("Habit created:" + key_val[1])
-                        settings["habit_lasttime"][0]["created"] = key_val[1]
+                        if system.validate_datetimestring(key_val[1]):
+                            messages.append("Habit created: " + key_val[1])
+                            settings["habit_lasttime"][0]["created"] = key_val[1]
+                        else:
+                            print("habit_lasttime is not a datetime.")
+                             
 
                     elif key_val[0] == "wait":
-                        messages.append("Wait seconds:" + key_val[1])
-                        settings["runtime_settings"][0]["wait"] = key_val[1]
+                        if type(key_val[1]) == int:
+                            messages.append("Wait seconds:" + key_val[1])
+                            settings["runtime_settings"][0]["wait"] = key_val[1]
+                        else:
+                            print("The waiting time is not a number")
+                            
                     elif key_val[0] == "automatic_tests":
-                        messages.append("Automatic tests: " + key_val[1])
-                        settings["runtime_settings"][0]["automatic_tests"] = key_val[1]
+                        if bool(key_val[1]) == True or bool(key_val[1]) == False:
+                            messages.append("Automatic tests: " + key_val[1])
+                            settings["runtime_settings"][0]["automatic_tests"] = key_val[1]
+                        else: 
+                            print("Automatic tests value have to be 'True' or 'False'")
                     elif key_val[0] == "show_messages":
-                        messages.append("Show messages: " + key_val[1])
-                        settings["runtime_settings"][0]["show_messages"] = key_val[1]
+                        if bool(key_val[1]) == True or bool(key_val[1]) == False:
+                            messages.append("Show messages: " + key_val[1])
+                            settings["runtime_settings"][0]["show_messages"] = key_val[1]
+                        else: 
+                            print("Show Messages value have to be 'True' or 'False'")
                     elif key_val[0] == "return_json":
-                        messages.append("Return json (to website):" + key_val[1])
-                        settings["runtime_settings"][0]["return_json"] = key_val[1]
+                        if bool(key_val[1]) == True or bool(key_val[1]) == False:
+                            messages.append("Return json (to website): " + key_val[1])
+                            settings["runtime_settings"][0]["return_json"] = key_val[1]
+                        else: 
+                            print("Return json value have to be 'True' or 'False'")
                     else:
                         messages.append("A key wasn't known ("+key_val[0]+"..")
 

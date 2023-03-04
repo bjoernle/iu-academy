@@ -250,9 +250,9 @@ class AnalyseData:
 
                 timespan = habit[4]
                 self.analysed_data[habit_name]["given_attrs"]["timespan"] = timespan
-                start_date = datetime.strptime(habit[5], '%Y-%m-%d')
+                start_date = system.string_to_datetime(habit[5])
                 self.analysed_data[habit_name]["given_attrs"]["start_date"] = start_date
-                end_date = datetime.strptime(habit[6], '%Y-%m-%d')
+                end_date = system.string_to_datetime(habit[6])
                 self.analysed_data[habit_name]["given_attrs"]["end_date"] = end_date
                 target_time_start = datetime.strptime(habit[7], '%H:%M').time()
                 self.analysed_data[habit_name]["given_attrs"]["target_time_start"] = target_time_start
@@ -281,7 +281,7 @@ class AnalyseData:
                 #print("Habit done last times: ")
                 habit_dones = sqlite.get_sqlite_vals_by_columns_and_values(self.path, "habits_lasttime", "habit_id",
                                                                            str(habit_id), show_db_actions)
-
+                print(start_date)
                 days_since = date.today() - datetime.date(start_date)
                 self.analysed_data[habit_name]["analysed_data"]["days_since"] = days_since.days
                 days_left = datetime.date(end_date) - date.today()

@@ -1,7 +1,4 @@
 import datetime
-import time
-import os
-import platform
 
 def get_folder_separator():
     import os
@@ -10,7 +7,6 @@ def get_folder_separator():
         return "\\"
     else:
         return "/"
-
 
 def clear_screen():
     # import only system from os
@@ -29,8 +25,7 @@ def clear_screen():
     sleep(4)
     # now call function we defined above
     clear()
-
-
+	
 def create_windows_task_in_taskplan():
     import datetime
     import win32com.client
@@ -70,7 +65,6 @@ def create_windows_task_in_taskplan():
         '',  # No password
         TASK_LOGON_NONE)
 
-
 def createWebServer():
     import http.server
     import socketserver
@@ -90,67 +84,24 @@ def createWebServer():
     # Star the server
     my_server.serve_forever()
 
-
 def string_to_datetime(datestring):
     d=""
     try:
-        d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M:%S.%f")
+        d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M:%S")
+        
     except ValueError:
         try:
-            d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M:%S")
+            d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M")
         except ValueError:
             try:
-                d = datetime.datetime.strptime(datestring, "%Y-%m-%d %H:%M")
-            except ValueError:
-                try:
-                    d = datetime.datetime.strptime(datestring, "%Y-%m-%d")
-                except:
-                    d="date ("+datestring+") not transformable"
+                d = datetime.datetime.strptime(datestring, "%Y-%m-%d")
+            except:
+                d="date not transformable"
     finally:
         return d
-
-
-def validate_datetimestring(datetimestring):
-    val = string_to_datetime(datetimestring)
-    if isinstance(val, datetime.datetime):
-        return True
-    else:
-        return False
-
-
-def validate_datestring(datestring):
-    try:
-        datetime.date.fromisoformat(datestring)
-    except ValueError:
-        raise ValueError("Incorrect data format, should be YYYY-MM-DD")
-
-def validate_timestring(timestring):
-    try:
-        time.strptime(timestring, '%H:%M')
-        return True
-    except ValueError:
-        try:
-            time.strptime(timestring, '%H:%M:%S')
-            return True
-        except ValueError:
-            return False
-
-
+            
 def get_own_ip_address():
     import socket
     hostname=socket.gethostname()
     IPAddr=socket.gethostbyname(hostname)
     return IPAddr
-
-def open_browser():
-    import webbrowser
-    ip = str(get_own_ip_address())
-    url = "http://"+ip+":5000"
-
-    webbrowser.open(url, new=0, autoraise=True)
-
-def start_server():
-    if platform.system() == "Windows":
-        os.system("start /wait cmd /c python webserver.py")
-    if platform.system() == "Linux":
-        os.system("gnome-terminal -e 'bash -c python webserver.py'")

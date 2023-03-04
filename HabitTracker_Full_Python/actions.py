@@ -42,7 +42,6 @@ def add_habit(path, settings_json):
     import sqlite
 
     user_id = settings_json["user"][0]["user_id"]
-    print("..id:" + user_id)
     name = settings_json["habit"][0]["name"]
     description = settings_json["habit"][0]["description"]
     timespan = settings_json["habit"][0]["timespan"]
@@ -60,6 +59,15 @@ def add_habit(path, settings_json):
                                       user_id + "," + name + "," + description + "," + timespan + "," + date_start + "," + date_end + "," + target_time_start + "," + target_time_end + "," + target_duration + "," + target_repeats + "," + created)
     else:
         print("At least one value of habits isn't setted.")
+        print("user-id:"+user_id)
+        print("name:"+name)
+        print("desc:"+description)
+        print("timespan:"+timespan)
+        print("target time start:"+target_time_start)
+        print("target time end:"+target_time_end)
+        print("target duration:"+target_duration)
+        print("repeats:"+target_repeats)
+        print("created:"+created)
 
 
 def add_action(path, settings_json):
@@ -76,13 +84,17 @@ def add_action(path, settings_json):
     created = settings_json["habit_lasttime"][0]["created"]
 
     if habit_id != "" and start_datetime != "" and end_datetime != "" and created != "":
-        sqlite.insert_to_sqlite_table(path, "habits", "habit_id, start_datetime, end_datetime, created",
+        sqlite.insert_to_sqlite_table(path, "habits_lasttime", "habit_id, start_datetime, end_datetime, created",
                                       habit_id + ", " + start_datetime + ", " + end_datetime + ", " + created)
     else:
         print("At least one value of habits-actions isn't setted.")
+        print("habit_id: "+habit_id)
+        print("start_datetime: "+start_datetime)
+        print("end_datetime: "+end_datetime)
+        print("created: "+created)
 
 
-def get_habits_of_user(path, settings_json, return_json="True"):
+def get_habits_of_user(path, settings_json, return_json="False"):
     """ add a user to table users
 
     :param settings_json: the new settings_json
@@ -117,7 +129,7 @@ def get_done_habits_of_user(path, settings_json, return_json=True):
     habit_id = settings_json["habit_id"]
     show_db_actions = settings_json["runtime_settings"][0]["show_db_actions"]
     rows = sqlite.get_sqlite_vals_by_columns_and_values(path, "habits_lasttime", "habit_id", habit_id, show_db_actions)
-    if return_json:
+    if bool(return_json):
         return json.dumps(rows)
     else:
         for row in rows:
