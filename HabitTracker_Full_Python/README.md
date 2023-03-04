@@ -58,7 +58,7 @@ Follow instructions on screen
     python HabitTracker.py action=YOURACTION ...........
     ---
 
-for example a test everything:
+for example a "test everything":
 
     ---shell
     python HabitTracker.py action=TestEverything automatic_tests=True user_id=1
@@ -112,12 +112,12 @@ Now you're able to do something like this:
         python HabitTracker.py action=SignupUser user_name=USERNAME user_password=USERPASSWORD
         ---
     
-    AddHabit (string user_id, string name, string description, string timespan, string date_start, string date_end, string target_time_start, string target_time_end, string target_duration, string target_repeats)
+    AddHabit (string user_id, string name, string description, string habit_timespan, string date_start, string date_end, string target_time_start, string target_time_end, string target_duration, string target_repeats)
         Example: 
     
         ---shell
-        python HabitTracker.py action=AddHabit user_id=USER_ID habit_name=HABIT³NAME timespan="dayly"<-OR->timespan="weekly"<-OR->timespan="monthly"<-OR->timespan="yearly"
-        date_start="2023-01-01" date_end="2023-12-31" target_time_start="07:00" target_time_end="08:00" target_duration="00:30" target_repeats="1"
+        python HabitTracker.py action=AddHabit user_id=USER_ID habit_name=HABIT³NAME habit_description=- habit_timespan="dayly"<-OR->habit_timespan="weekly"<-OR->habit_timespan="monthly"<-OR->habit_timespan="yearly"
+        date_start="2023-01-01" date_end="2023-12-31" habit_target_time_start="07:00" habit_target_time_end="08:00" habit_target_duration="00:30" habit_target_repeats="1"
         ---
     
     AddAction (string user_id, string habit_id, DateTime-string start_datetime, DateTime-string end_datetime, DateTime-string created)

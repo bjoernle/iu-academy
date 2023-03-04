@@ -11,9 +11,6 @@ import sys
 from datetime import datetime
 import time
 import json
-import os
-import platform
-import subprocess
 
 folder_separator = system.get_folder_separator()
 current_path = str(globals.get_current_path())
@@ -50,10 +47,11 @@ def eli():
         user_password = settings_json["user"][0]["user_password"]
         if user_name != "" and user_password != "":
             created = datetime.now()
-            cols = "username, password, created"
-            vals = user_name + "," + user_password + "," + created
+            cols = "name, password, created"
+            vals = user_name + "," + user_password + "," + str(created)
             sqlite.insert_to_sqlite_table(path, "users", cols, vals, False)
             user = sqlite.get_sqlite_vals_by_columns_and_values(path, "users", cols, vals, False)
+            print("Created user.")
             return json.dumps(user)
 
     elif settings_json["action"] == "AddHabit":
@@ -83,29 +81,30 @@ def eli():
 
     elif settings_json["action"] == "ShowAll":
         test = test_project.TestHabitTracker(settings_json)
-        test.show_all(path)
+        db=path
+        test.show_all(db)
     elif settings_json["action"] == "ShowAllOfUser":
         test = test_project.TestHabitTracker(settings_json)
         user_id = settings_json["user"][0]["user_id"]
-        test.show_all_of_user(test_path, str(user_id))
+        db=path
+        test.show_all_of_user(db, str(user_id))
     elif settings_json["action"] == "TestEverything":
         test = test_project.TestHabitTracker(settings_json)
-        test.test_everything(test_path)
+        db=test_path
+        test.test_everything(db)
     elif settings_json["action"] == "TestEverythingAutomatic":
         test = test_project.TestHabitTracker(settings_json)
-        test.test_everything(test_path)
+        db=path
+        test.test_everything(db)
 
     elif settings_json["action"] == "StartServer":
-        if platform.system() == "Windows":
-            os.system("start /wait cmd /c python webserver.py")
-        if platform.system() == "Linux":
-            os.system("gnome-terminal -e 'bash -c python webserver.py'")
-        #import thread
-        #thread.start_new_thread(os.system, ('a.exe',))
-        import webbrowser
-        ip = str(system.get_own_ip_address())
-        url = "http://"+ip+":5000"
-        webbrowser.open(url, new=0, autoraise=True)
+        from threading import Thread
+        thread = Thread(target = system.start_server) #, args = (10, )
+        thread.start()
+        time.sleep(3)
+        thread1 = Thread(target = system.open_browser)
+        thread1.start()
+
     else:
         print("No action was given.")
 
