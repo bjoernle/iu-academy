@@ -1,0 +1,19 @@
+{
+	"action": "",
+	"user": [
+		{
+			"user_name": "",
+			"user_password": "",
+			"user_id": ""
+		}
+	],
+	"runtime_settings": [
+		{
+			"wait": "0",
+			"show_messages": "False",
+			"show_db_actions": "False",
+			"automatic_tests": "True",
+			"return_json": "True"
+		}
+	]
+}
