@@ -2,6 +2,11 @@ import sqlite3
 import datetime
 
 def get_comments_by_username_and_usertype(username, usertype):
+    """ get comments by username and usertype
+    :param username: username of user you want to search
+    :param usertype: Guest or Host
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
     val = 0
@@ -23,6 +28,11 @@ def get_comments_by_username_and_usertype(username, usertype):
     print()
 
 def get_comments_of_places_rented_in_daterange(begin, end):
+    """ get comments of places, rented in a specific date range
+    :param begin: The beginning date YYYY-MM-DD
+    :param end: The ending date YYYY-MM-DD
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
 
@@ -42,6 +52,9 @@ def get_comments_of_places_rented_in_daterange(begin, end):
     print()
 
 def get_places_unoccupied_now():
+    """ get places that are today unoccupied
+    :return: Some text and one or more rows
+    """
     # get today's date
     today = datetime.date.today()
 
@@ -70,6 +83,9 @@ def get_places_unoccupied_now():
     conn.close()
 
 def get_places_evaluated_by_both_usertypes():
+    """ get places that was evaluated by both usertypes
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
 
@@ -89,9 +105,12 @@ def get_places_evaluated_by_both_usertypes():
     print()
 
 def get_places_in_city_and_datespan(city, start_date, end_date):
-    # Define the time period we're interested in
-    # start_date = '2023-04-01'
-    # end_date = '2023-04-30'
+    """ get comments of places, rented in a specific date range
+    :param city: The city you're searching for
+    :param begin: The begin date YYYY-MM-DD
+    :param end: The ending date YYYY-MM-DD
+    :return: Some text and one or more rows
+    """
 
     # Connect to the database
     conn = sqlite3.connect('airbnb.db')
@@ -112,7 +131,7 @@ def get_places_in_city_and_datespan(city, start_date, end_date):
 
     # Print the results
     if results:
-        print("The following rentable places in "+city+" are available during the specified time period ("+start_date+" - "+end_date+"):")
+        print("The following rentable places in "+city+" are available during the specified time period ("+start_date+" - "+end_date+") ("+str(len(results))+"):")
         for result in results:
             print(result[0])
     else:
@@ -120,6 +139,10 @@ def get_places_in_city_and_datespan(city, start_date, end_date):
     print()
 
 def get_photos_with_rates_higher_number(number):
+    """ get comments of places, rented in a specific date range
+    :param number: The rate you want  to search higher equal
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
 
@@ -129,8 +152,8 @@ def get_photos_with_rates_higher_number(number):
     FROM Photos
     JOIN RentablePlaces ON Photos.place_id = RentablePlaces.id
     JOIN GuestEvaluations ON RentablePlaces.id = GuestEvaluations.place_id
-    WHERE GuestEvaluations.rating >= """+str(number)+""";
-    """).fetchall()
+    WHERE GuestEvaluations.rating >= ?;
+    """,(str(number))).fetchall()
 
     # Print the results
     print("Photos with rates higher than "+str(number)+" ("+str(len(results))+")")
@@ -139,12 +162,16 @@ def get_photos_with_rates_higher_number(number):
     print()
 
 def get_photos_by_usertype(usertype):
+    """ get comments of places, rented in a specific date range
+    :param usertype: Guest or Host
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
     
     val = 0
-    if usertype == "Host": val = 1
-    else: val = 2
+    if usertype == "Host": val = "1"
+    else: val = "2"
 
     # Execute the query
     results = conn.execute("""
@@ -153,8 +180,8 @@ def get_photos_by_usertype(usertype):
     JOIN RentablePlaces ON Photos.place_id = RentablePlaces.id
     JOIN Comments ON RentablePlaces.id = Comments.place_id
     JOIN Users ON Comments.user_id = Users.id
-    WHERE Users.usertype_id = '"""+str(val)+"""';
-    """).fetchall()
+    WHERE Users.usertype_id = ?;
+    """,(val)).fetchall()
 
     # Print the results
     print("Photos by usertype "+usertype+" ("+str(len(results))+")")
@@ -163,12 +190,16 @@ def get_photos_by_usertype(usertype):
     print()
 
 def get_places_that_was_rented_by_usertype(usertype):
+    """ get comments of places, rented in a specific date range
+    :param usertype: Guest or Host
+    :return: Some text and one or more rows
+    """
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
 
     val = 0
-    if usertype == "Host": val = 1
-    else: val = 2
+    if usertype == "Host": val = "1"
+    else: val = "2"
 
     # Execute the query
     results = conn.execute("""
@@ -176,8 +207,8 @@ def get_places_that_was_rented_by_usertype(usertype):
     FROM RentablePlaces
     JOIN Rentals ON RentablePlaces.id = Rentals.place_id
     JOIN Users ON Rentals.user_id = Users.id
-    WHERE Users.usertype_id = '"""+str(val)+"""';
-    """).fetchall()
+    WHERE Users.usertype_id = ?;
+    """,(val)).fetchall()
 
     # Print the results
     print("Places that was rented by usertype '"+usertype+"' ("+str(len(results))+")")

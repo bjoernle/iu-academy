@@ -356,7 +356,7 @@ def get_all_from_table(path, table, show_action=False):
         print(sql)
     cursor.execute(sql)
     rows = cursor.fetchall()
-    print("Table :"+table)
+    print("Table: "+table)
     for row in rows:
         print(row)
     print()

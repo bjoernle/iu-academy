@@ -11,7 +11,6 @@ import system
 import globals
 app = Flask(__name__)
 
-#mariadb_connect = mariadb.connect(user='root', password='', database='test')
 @app.route('/')
 def home():
   if not session.get('logged_in'):
@@ -31,8 +30,6 @@ def do_admin_login():
   path = current_path + folder_separator + "airbnb.db"
   data = sqlite.get_sqlite_vals_by_columns_and_values(path, "Users", "name, password", userName + ", " + password)
 
-  #if account:
-  #flash(data)
   if data[0]!="":
     print(data[0])
     session['logged_in'] = True

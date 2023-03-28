@@ -1,7 +1,7 @@
 # AirBnB Datamart
 
 ## What is it?
-It's a datamart for the webpage airbnb.
+It's a datamart for fictional airbnb clone.
 You could run it directly by python, or you could use the Python server.
 
 ## Installation of Python
@@ -60,7 +60,7 @@ Follow instructions on screen
 for example a "test everything":
 
     ---shell
-    python AirBnBDatamart.py action=TestEverything automatic_tests=True user_id=1
+    python AirBnBDatamart.py action=TestEverything
     ---
 
 
@@ -103,14 +103,7 @@ Now you're able to do something like this:
         Example: 
     
         ---shell
-        python AirBnBDatamart.py action=TestEverything user_id=USER_ID
-        ---
-    
-    TestEverythingAutomatic (string user_id, string automatic_tests="True")
-        Example: 
-    
-        ---shell
-        python AirBnBDatamart.py action=TestEverythingAutomatic user_id=USER_ID automatic_tests="False"
+        python AirBnBDatamart.py action=TestEverything
         ---
 
     StartServer ()
@@ -120,12 +113,79 @@ Now you're able to do something like this:
         python AirBnBDatamart.py action=StartServer
         ---
 
+    GetComments ()
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=GetComments
+        ---
+
+    GetCommentsInDateRange (string from, string to)
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=GetCommentsInDateRange from=YYYY-MM-DD to=YYYY-MM-DD
+        ---
+
+    GetPhotosByUsertype (string usertype)
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=GetPhotosByUsertype usertype=Host
+        ---
+
+    GetPhotosRatesHigherNumber (int number)
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=GetPhotosRatesHigherNumber number=3
+        ---
+
+    PlacesEvaluatedByBothUsertypes ()
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=PlacesEvaluatedByBothUsertypes
+        ---
+    
+    PlacesInCityAndTimespan (string city, string from, string to)
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=PlacesInCityAndTimespan
+        ---
+
+    PlacesRentedByUsertype (string usertype)
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=PlacesRentedByUsertype usertype=Guest
+        ---    
+    
+    PlacesUnoccupiedNow ()
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=PlacesUnoccupiedNow usertype=Guest
+        ---    
+
+    TestEverything ()
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=TestEverything
+        ---  
+
+    ShowAll ()
+        Example: 
+    
+        ---shell
+        python AirBnBDatamart.py action=ShowAll
+        ---  
+
+
 ## Tests
 
-it's necessary to create a user first, if you're not selecting the automatic full test
-for analysing.
-for normal analysing, it's necessary to create habits and actions before.
-
 	---shell
-	python AirBnBDatamart.py action=TestEverything automatic_tests=True user_id=1
+	python AirBnBDatamart.py action=TestEverything
 	---
