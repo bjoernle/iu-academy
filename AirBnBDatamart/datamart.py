@@ -13,7 +13,7 @@ def get_comments_by_username_and_usertype(username, usertype):
     FROM Comments
     JOIN RentablePlaces ON Comments.place_id = RentablePlaces.id
     JOIN Users ON Comments.user_id = Users.id
-    WHERE Users.name = ? AND Users.usertype_id = ?;
+    WHERE Users.name LIKE ? AND Users.usertype_id = ?;
     """,(val, username)).fetchall()
 
     # Print the results
@@ -23,7 +23,6 @@ def get_comments_by_username_and_usertype(username, usertype):
     print()
 
 def get_comments_of_places_rented_in_daterange(begin, end):
-
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
 
@@ -37,7 +36,7 @@ def get_comments_of_places_rented_in_daterange(begin, end):
     """,(end, begin)).fetchall()
 
     # Print the results
-    print("Places that was commented in range from "+str(begin)+" to "+str(end)+" ("+str(len(results))+")")
+    print("Comments of places that was rented in range from "+str(begin)+" to "+str(end)+" ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()
@@ -101,7 +100,7 @@ def get_places_in_city_and_datespan(city, start_date, end_date):
     results = conn.execute("""
     SELECT RentablePlaces.name
     FROM RentablePlaces
-    WHERE RentablePlaces.address LIKE '%"""+city+"""%'
+    WHERE RentablePlaces.city LIKE ?
     AND NOT EXISTS (
         SELECT 1
         FROM Rentals
@@ -109,15 +108,16 @@ def get_places_in_city_and_datespan(city, start_date, end_date):
         AND Rentals.start_date <= ?
         AND Rentals.end_date >= ?
     );
-    """, (end_date, start_date)).fetchall()
+    """, (city, end_date, start_date)).fetchall()
 
     # Print the results
     if results:
-        print("The following rentable places in Berlin are available during the specified time period:")
+        print("The following rentable places in "+city+" are available during the specified time period ("+start_date+" - "+end_date+"):")
+        print()
         for result in results:
             print(result[0])
     else:
-        print("There are no rentable places available in Berlin during the specified time period.")
+        print("There are no rentable places available in "+city+" during the specified time period. ("+start_date+" - "+end_date+")")
     print()
 
 def get_photos_with_rates_higher_number(number):

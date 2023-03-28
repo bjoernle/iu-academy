@@ -7,6 +7,15 @@
 			"user_id": ""
 		}
 	],
+	"given_attrs": [
+		{
+			"from": "",
+			"to": "",
+			"number":"",
+			"city":"",
+			"usertype":""
+		}
+	],
 	"runtime_settings": [
 		{
 			"wait": "0",

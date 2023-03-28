@@ -47,7 +47,32 @@ def set_new_settings(settings, parameters):
                             settings["user"][0]["user_id"] = key_val[1]
                         else:
                             print("User-id is not a number.")
-   
+
+                    elif key_val[0] == "from":
+                        if system.string_to_datetime(key_val[1])!="date not transformable":
+                            messages.append("From:" + key_val[1])
+                            settings["given_attrs"][0]["from"] = key_val[1]
+                        else:
+                            print("from is not a datetime.")
+                    elif key_val[0] == "to":
+                        if system.string_to_datetime(key_val[1])!="date not transformable":
+                            messages.append("To:" + key_val[1])
+                            settings["given_attrs"][0]["to"] = key_val[1]
+                        else:
+                            print("to is not a datetime.")
+                    elif key_val[0] == "number":
+                        if key_val[1].isdigit():
+                            messages.append("Given number:" + key_val[1])
+                            settings["given_attrs"][0]["number"] = key_val[1]
+                        else:
+                            print("User-id is not a number.")
+                    elif key_val[0] == "city":
+                            messages.append("User ID:" + key_val[1])
+                            settings["given_attrs"][0]["city"] = key_val[1]
+                    elif key_val[0] == "usertype":
+                            messages.append("Usertype:" + key_val[1])
+                            settings["given_attrs"][0]["usertype"] = key_val[1]
+                    
 
                     elif key_val[0] == "wait":
                         if type(system.intTryParse(key_val[1])) == int:

@@ -16,19 +16,15 @@ given_attributes = sys.argv
 settings_json = globals.get_settings_json(folder_separator)
 
 def eli():
-    """
-    Choose the way to handle next steps
-    """
-
+    #fill the temporary settings.json
     global settings_json
-
     if len(given_attributes) > 1:
         settings_json = settingsChanger.set_new_settings(settings_json, given_attributes)
     else:
         print("You choosed no action.. Quitting the program.")
         quit()
 
-    
+    #if the database is not existing, create it and fill it with entities
     if not files.exist_file(current_path+folder_separator+"airbnb.db"):
         print("Found no database. Creating database and some entities..")
         sqlite.create_tables(db_path)
@@ -73,17 +69,25 @@ def eli():
     elif settings_json["action"] == "GetComments":
         datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
     elif settings_json["action"] == "GetCommentsInDateRange":
-        datamart.get_comments_of_places_rented_in_daterange("2023-02-28","2023-03-03")
+        begin=settings_json["given_attrs"][0]["from"]
+        end=settings_json["given_attrs"][0]["to"]
+        datamart.get_comments_of_places_rented_in_daterange(begin, end)
     elif settings_json["action"] == "GetPhotosByUsertype":
-        datamart.get_photos_by_usertype("Host")
+        usertype=settings_json["given_attrs"][0]["usertype"]
+        datamart.get_photos_by_usertype(usertype)
     elif settings_json["action"] == "GetPhotosRatesHigherNumber":
-        datamart.get_photos_with_rates_higher_number(3)
+        number=settings_json["given_attrs"][0]["number"]
+        datamart.get_photos_with_rates_higher_number(number)
     elif settings_json["action"] == "PlacesEvaluatedByBothUsertypes":
         datamart.get_places_evaluated_by_both_usertypes()
     elif settings_json["action"] == "PlacesInCityAndTimespan":
-        datamart.get_places_in_city_and_datespan("Munich", "2024-03-01", "2024-03-04")
+        city=settings_json["given_attrs"][0]["city"]
+        begin=settings_json["given_attrs"][0]["from"]
+        end=settings_json["given_attrs"][0]["to"]        
+        datamart.get_places_in_city_and_datespan(city, begin, end)
     elif settings_json["action"] == "PlacesRentedByUsertype":
-        datamart.get_places_that_was_rented_by_usertype("Guest")
+        usertype=settings_json["given_attrs"][0]["usertype"]
+        datamart.get_places_that_was_rented_by_usertype(usertype)
     elif settings_json["action"] == "PlacesUnoccupiedNow":
         datamart.get_places_unoccupied_now()  
     elif settings_json["action"] == "TestEverything":
@@ -104,7 +108,6 @@ def eli():
         sqlite.get_all_from_table(db_path, "GuestEvaluations")
         sqlite.get_all_from_table(db_path, "Photos")
         sqlite.get_all_from_table(db_path, "Comments")
-
 
     else:
         print("No action was given.")
