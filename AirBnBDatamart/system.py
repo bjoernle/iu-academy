@@ -10,6 +10,14 @@ def get_folder_separator():
     else:
         return "/"
 
+
+def intTryParse(value):
+    try:
+        return int(value)
+    except ValueError:
+        return value
+
+
 def clear_screen():
     # import only system from os
     from os import system, name

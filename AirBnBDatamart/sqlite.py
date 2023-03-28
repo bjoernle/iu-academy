@@ -247,7 +247,7 @@ def insert_data():
 
     # insert 15 entities into the Comments table
     for i in range(15):
-        user_id = user_ids[i % len(user_ids)]  # use modulus to cycle through user ids
+        user_id = i
         place_id = place_ids[i % len(place_ids)]  # use modulus to cycle through place ids
         comment = comments[i % len(comments)]  # use modulus to cycle through comment texts
         created_date = created[i % len(created)]  # use modulus to cycle through created dates
@@ -274,7 +274,7 @@ def insert_data():
         # insert the values into the GuestEvaluations table
         conn.execute("INSERT INTO GuestEvaluations (user_id, place_id, rating, comment, created) VALUES (?, ?, ?, ?, ?)", (user_id, place_id, rating, comment, created))
 
-        # insert 15 entities into the GuestEvaluations table
+    # insert 15 entities into the GuestEvaluations table
     for i in range(15):
         user_id = random.choice(user_ids)
         place_id = random.choice(place_ids)
@@ -288,14 +288,14 @@ def insert_data():
         start_date = datetime.date(2023, 4, 1)  # April 1, 2023
         end_date = datetime.date(2023, 4, 30)  # April 30, 2023
         delta = datetime.timedelta(days=1)  # one day time delta
-        # insert 15 entities into the Rentals table
-        for i in range(15):
-            place_id  = user_id = place_ids[i % len(place_ids)]  # use modulus to cycle through place ids
-            rental_start_date = start_date + i * delta  # increment start date for each rental
-            rental_end_date = rental_start_date + 6 * delta  # assume 7-day rentals
+    # insert 15 entities into the Rentals table
+    for i in range(15):
+        place_id  = user_id = place_ids[i % len(place_ids)]  # use modulus to cycle through place ids
+        rental_start_date = start_date + i * delta  # increment start date for each rental
+        rental_end_date = rental_start_date + 6 * delta  # assume 7-day rentals
 
-            # insert the values into the Rentals table
-            conn.execute("INSERT INTO Rentals (user_id, place_id, start_date, end_date) VALUES (?, ?, ?, ?)", (user_id, place_id, rental_start_date, rental_end_date))
+        # insert the values into the Rentals table
+        conn.execute("INSERT INTO Rentals (user_id, place_id, start_date, end_date) VALUES (?, ?, ?, ?)", (user_id, place_id, rental_start_date, rental_end_date))
 
 
     # Define the list of rentable places to insert
@@ -356,8 +356,10 @@ def get_all_from_table(path, table, show_action=False):
         print(sql)
     cursor.execute(sql)
     rows = cursor.fetchall()
+    print("Table :"+table)
     for row in rows:
         print(row)
+    print()
     return rows
 
 

@@ -18,7 +18,7 @@
 
 	</head>
 	<body>
-		<h1>Habit tracker</h1>
+		<h1>AirBnB Datamart</h1>
 		<div id="user_infos" width="100%">
 			<h3 id="username">
 				User: {{session.user}}
@@ -28,11 +28,15 @@
 		<select id="function_select"  width="100%">
 			<option value=""></option>
 			<option value="autoTests">Test project automatically</option>
-			<option value="createHabit">Create habit</option>
-			<option value="createActivity">Create activity</option>
-			<option value="showAll">Show all</option>
-			<option value="analyseDataFull">Analyse your data (full)</option>
-			<option value="analyseDataSummary">Analyse your data (summary)</option>
+			<option value="showAll">show whole db data</option>
+			<option value="placesUnoccupiedNow">show places that are now unoccupied</option>
+			<option value="placesRentedByUsertype">show places that are rented by usertype</option>
+			<option value="placesInCityAndTimespan">show places in city and timespan</option>
+			<option value="placesEvaluatedByBothUsertypes">Places evaluated by both usertypes</option>
+			<option value="getPhotosRatesHigherNumber">Photos with rates higher number</option>
+			<option value="getPhotosByUsertype">Photos by usertype</option>
+			<option value="getCommentsInDateRange">Comments in daterange</option>
+			<option value="getComments">Comments of Alexander</option>
 		</select>
 		<div  width="100%" style="padding-top:20px;">
 			<div id="inputarea" width="49%" style="float:left">
@@ -87,24 +91,31 @@
 			$(document).on("change", '#function_select', function() {
 				if ($(this).val() == 'autoTests'){
 				  $('#inputareaCreated').load("{{ url_for('static', filename='html_templates/test_projekt.html') }}").fadeIn("fast");
-				  
-				  //alert("loaded");
-				} else if($(this).val() == 'createHabit') {
-					//$('#inputareaCreated').load('../Html/html_templates/create_habit.html').fadeIn("fast");
-					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/create_habit.html') }}").fadeIn("fast");
-				} else if($(this).val() == 'createActivity') {
-					//$('#inputareaCreated').load('../Html/html_templates/create_action.html').fadeIn("fast");
-					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/create_action.html') }}").fadeIn("fast");
 				} else if($(this).val() == 'showAll') {
-					//$('#inputareaCreated').load('../Html/html_templates/show_all.html').fadeIn("fast");
 					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/show_all.html') }}").fadeIn("fast");
-				} else if($(this).val() == 'analyseDataSummary') {
-					//$('#inputareaCreated').load('../Html/html_templates/analyse_data_summary.html').fadeIn("fast");
-					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/analyse_data_summary.html') }}").fadeIn("fast");
+				} else if($(this).val() == 'placesUnoccupiedNow') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/places_unoccupied_now.html') }}").fadeIn("fast");
 				}
-				else if($(this).val() == 'analyseDataFull') {
-					//$('#inputareaCreated').load('../Html/html_templates/analyse_data.html').fadeIn("fast");
-					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/analyse_data.html') }}").fadeIn("fast");
+				else if($(this).val() == 'placesRentedByUsertype') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/places_rented_by_usertype.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'placesInCityAndTimespan') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/places_in_city_and_timspan.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'placesEvaluatedByBothUsertypes') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/places_evaluated_by_both.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'getPhotosRatesHigherNumber') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/get_photos_rates_higher_number.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'getPhotosByUsertype') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/get_photos_by_usertype.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'getCommentsInDateRange') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/get_comments_in_date_range.html') }}").fadeIn("fast");
+				}
+				else if($(this).val() == 'getComments') {
+					$('#inputareaCreated').load("{{ url_for('static', filename='html_templates/get_comments.html') }}").fadeIn("fast");
 				}
 				else{
 					$('#inputareaCreated').Html();
@@ -180,7 +191,7 @@
 					value=input.val();
 				}
 				myArray[name]=value.toString().replaceAll(" ","³");
-				//alert(myArray[name]);
+				//console.log(myArray[name]);
 			});
 			/*
 			$.each(myArray, function( index, value ) {

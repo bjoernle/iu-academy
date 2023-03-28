@@ -50,7 +50,7 @@ def set_new_settings(settings, parameters):
    
 
                     elif key_val[0] == "wait":
-                        if type(key_val[1]) == int:
+                        if type(system.intTryParse(key_val[1])) == int:
                             messages.append("Wait seconds:" + key_val[1])
                             settings["runtime_settings"][0]["wait"] = key_val[1]
                         else:

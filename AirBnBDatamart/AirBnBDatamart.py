@@ -1,6 +1,7 @@
 import sqlite
 import sys
 import datetime
+import time
 
 import system
 import globals
@@ -37,7 +38,8 @@ def eli():
     #just for entertainment while waiting
     waiting_time = int(settings_json["runtime_settings"][0]["wait"])
     if waiting_time > 0:
-        datetime.time.sleep(waiting_time)
+        import time
+        time.sleep(waiting_time)
 
     #choose action
     if settings_json["action"] == "LoginUser":
@@ -68,18 +70,45 @@ def eli():
         thread1 = Thread(target = system.open_browser)
         thread1.start()
 
+    elif settings_json["action"] == "GetComments":
+        datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
+    elif settings_json["action"] == "GetCommentsInDateRange":
+        datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-03-03")
+    elif settings_json["action"] == "GetPhotosByUsertype":
+        datamart.get_photos_by_usertype("Host")
+    elif settings_json["action"] == "GetPhotosRatesHigherNumber":
+        datamart.get_photos_with_rates_higher_number(3)
+    elif settings_json["action"] == "PlacesEvaluatedByBothUsertypes":
+        datamart.get_places_evaluated_by_both_usertypes()
+    elif settings_json["action"] == "PlacesInCityAndTimespan":
+        datamart.get_places_in_city_and_datespan("Munich", "2023-03-01", "2023-03-04")
+    elif settings_json["action"] == "PlacesRentedByUsertype":
+        datamart.get_places_that_was_rented_by_usertype("Guest")
+    elif settings_json["action"] == "PlacesUnoccupiedNow":
+        datamart.get_places_unoccupied_now()  
+    elif settings_json["action"] == "TestEverything":
+        datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
+        datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-03-03")
+        datamart.get_photos_by_usertype("Host")
+        datamart.get_photos_with_rates_higher_number(3)
+        datamart.get_places_evaluated_by_both_usertypes()
+        datamart.get_places_in_city_and_datespan("Munich", "2023-03-01", "2023-03-04")
+        datamart.get_places_that_was_rented_by_usertype("Guest")
+        datamart.get_places_unoccupied_now()
+    elif settings_json["action"] == "ShowAll":
+        sqlite.get_all_from_table(db_path, "Users")
+        sqlite.get_all_from_table(db_path, "UserType")
+        sqlite.get_all_from_table(db_path, "Rentals")
+        sqlite.get_all_from_table(db_path, "RentablePlaces")
+        sqlite.get_all_from_table(db_path, "PlaceEvaluations")
+        sqlite.get_all_from_table(db_path, "GuestEvaluations")
+        sqlite.get_all_from_table(db_path, "Photos")
+        sqlite.get_all_from_table(db_path, "Comments")
+
+
     else:
         print("No action was given.")
-    
-    
-    #datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
-    #datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-03-03")
-    #datamart.get_photos_by_usertype("Host")
-    #datamart.get_photos_with_rates_higher_number(3)
-    #datamart.get_places_evaluated_by_both_usertypes()
-    #datamart.get_places_in_city_and_datespan("Munich", "2023-03-01", "2023-03-04")
-    #datamart.get_places_that_was_rented_by_usertype("Guest")  
-    #datamart.get_places_unoccupied_now()      
+        
 
     #sqlite.to_csv()
 

@@ -51,7 +51,7 @@ def logout():
 def result():
     array=[]
     array.append("python")
-    array.append("HabitTracker.py")
+    array.append("AirBnBDatamart.py")
     for key in request.form:
         key_replaced = key.replace("data[", "").replace("]", "")
         value = request.form[key]
