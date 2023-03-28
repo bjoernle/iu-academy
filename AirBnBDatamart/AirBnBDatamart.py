@@ -92,7 +92,7 @@ def eli():
         datamart.get_places_unoccupied_now()  
     elif settings_json["action"] == "TestEverything":
         datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
-        datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-03-03")
+        datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-04-12")
         datamart.get_photos_by_usertype("Host")
         datamart.get_photos_with_rates_higher_number(3)
         datamart.get_places_evaluated_by_both_usertypes()

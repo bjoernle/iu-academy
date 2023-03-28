@@ -5,8 +5,8 @@ def get_comments_by_username_and_usertype(username, usertype):
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
     val = 0
-    if usertype == "Guest": val = 1
-    else: val = 2
+    if usertype == "Guest": val = "1"
+    else: val = "2"
 
     results = conn.execute("""
     SELECT Comments.comment, RentablePlaces.name, Users.name
@@ -14,7 +14,7 @@ def get_comments_by_username_and_usertype(username, usertype):
     JOIN RentablePlaces ON Comments.place_id = RentablePlaces.id
     JOIN Users ON Comments.user_id = Users.id
     WHERE Users.name LIKE ? AND Users.usertype_id = ?;
-    """,(val, username)).fetchall()
+    """,(username, val)).fetchall()
 
     # Print the results
     print("Comments by username "+username+" and usertype "+usertype+" ("+str(len(results))+")")
@@ -33,7 +33,7 @@ def get_comments_of_places_rented_in_daterange(begin, end):
     JOIN RentablePlaces ON Comments.place_id = RentablePlaces.id
     JOIN Rentals ON RentablePlaces.id = Rentals.place_id
     WHERE Rentals.start_date >= ? AND Rentals.end_date <= ?;
-    """,(end, begin)).fetchall()
+    """,(begin, end)).fetchall()
 
     # Print the results
     print("Comments of places that was rented in range from "+str(begin)+" to "+str(end)+" ("+str(len(results))+")")
@@ -113,7 +113,6 @@ def get_places_in_city_and_datespan(city, start_date, end_date):
     # Print the results
     if results:
         print("The following rentable places in "+city+" are available during the specified time period ("+start_date+" - "+end_date+"):")
-        print()
         for result in results:
             print(result[0])
     else:
