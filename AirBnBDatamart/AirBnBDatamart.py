@@ -73,7 +73,7 @@ def eli():
     elif settings_json["action"] == "GetComments":
         datamart.get_comments_by_username_and_usertype("Alexander", "Guest")
     elif settings_json["action"] == "GetCommentsInDateRange":
-        datamart.get_comments_of_places_rented_in_daterange("2023-03-01","2023-03-03")
+        datamart.get_comments_of_places_rented_in_daterange("2023-02-28","2023-03-03")
     elif settings_json["action"] == "GetPhotosByUsertype":
         datamart.get_photos_by_usertype("Host")
     elif settings_json["action"] == "GetPhotosRatesHigherNumber":
@@ -81,7 +81,7 @@ def eli():
     elif settings_json["action"] == "PlacesEvaluatedByBothUsertypes":
         datamart.get_places_evaluated_by_both_usertypes()
     elif settings_json["action"] == "PlacesInCityAndTimespan":
-        datamart.get_places_in_city_and_datespan("Munich", "2023-03-01", "2023-03-04")
+        datamart.get_places_in_city_and_datespan("Munich", "2024-03-01", "2024-03-04")
     elif settings_json["action"] == "PlacesRentedByUsertype":
         datamart.get_places_that_was_rented_by_usertype("Guest")
     elif settings_json["action"] == "PlacesUnoccupiedNow":

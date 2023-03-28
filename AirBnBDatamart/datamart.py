@@ -1,29 +1,28 @@
 import sqlite3
 import datetime
 
-def get_comments_by_username_and_usertype(username, usertype):# Create a connection to the database
-
+def get_comments_by_username_and_usertype(username, usertype):
+    # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
     val = 0
-    if usertype == "Host": val = 1
+    if usertype == "Guest": val = 1
     else: val = 2
 
-    # Execute the query
     results = conn.execute("""
     SELECT Comments.comment, RentablePlaces.name, Users.name
     FROM Comments
     JOIN RentablePlaces ON Comments.place_id = RentablePlaces.id
-    JOIN Users ON RentablePlaces.user_id = Users.id
-    WHERE Users.name = '"""+username+"""' AND Users.usertype_id = 2;
-    """).fetchall()
+    JOIN Users ON Comments.user_id = Users.id
+    WHERE Users.name = ? AND Users.usertype_id = ?;
+    """,(val, username)).fetchall()
 
     # Print the results
-    print("Comments by username "+username+" and usertype "+usertype)
+    print("Comments by username "+username+" and usertype "+usertype+" ("+str(len(results))+")")
     for result in results:
         print(result)
     print()
 
-def get_comments_of_places_rented_in_daterange(check_in_date, check_out_date):
+def get_comments_of_places_rented_in_daterange(begin, end):
 
     # Create a connection to the database
     conn = sqlite3.connect('airbnb.db')
@@ -34,11 +33,11 @@ def get_comments_of_places_rented_in_daterange(check_in_date, check_out_date):
     FROM Comments
     JOIN RentablePlaces ON Comments.place_id = RentablePlaces.id
     JOIN Rentals ON RentablePlaces.id = Rentals.place_id
-    WHERE Rentals.start_date >= '"""+check_in_date+"""' AND Rentals.end_date <= '"""+check_out_date+"""';
-    """).fetchall()
+    WHERE Rentals.start_date >= ? AND Rentals.end_date <= ?;
+    """,(end, begin)).fetchall()
 
     # Print the results
-    print("Places that was commented in range from "+str(check_in_date)+" to "+str(check_out_date))
+    print("Places that was commented in range from "+str(begin)+" to "+str(end)+" ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()
@@ -63,7 +62,7 @@ def get_places_unoccupied_now():
     results = c.fetchall()
 
     # print the results
-    print("Now unoccupied places:")
+    print("Now unoccupied places: ("+str(len(results))+")")
     for row in results:
         print(row[0])
     print()
@@ -85,7 +84,7 @@ def get_places_evaluated_by_both_usertypes():
     """).fetchall()
 
     # Print the results
-    print("Places evaluated by both usertypes")
+    print("Places evaluated by both usertypes ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()
@@ -135,7 +134,7 @@ def get_photos_with_rates_higher_number(number):
     """).fetchall()
 
     # Print the results
-    print("Photos with rates higher than "+str(number))
+    print("Photos with rates higher than "+str(number)+" ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()
@@ -159,7 +158,7 @@ def get_photos_by_usertype(usertype):
     """).fetchall()
 
     # Print the results
-    print("Photos by usertype "+usertype)
+    print("Photos by usertype "+usertype+" ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()
@@ -182,7 +181,7 @@ def get_places_that_was_rented_by_usertype(usertype):
     """).fetchall()
 
     # Print the results
-    print("Places that was rented by usertype '"+usertype+"'")
+    print("Places that was rented by usertype '"+usertype+"' ("+str(len(results))+")")
     for result in results:
         print(result[0])
     print()

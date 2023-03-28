@@ -247,7 +247,7 @@ def insert_data():
 
     # insert 15 entities into the Comments table
     for i in range(15):
-        user_id = i
+        user_id = i+1
         place_id = place_ids[i % len(place_ids)]  # use modulus to cycle through place ids
         comment = comments[i % len(comments)]  # use modulus to cycle through comment texts
         created_date = created[i % len(created)]  # use modulus to cycle through created dates
